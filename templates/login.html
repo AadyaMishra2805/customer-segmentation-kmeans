@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Login</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Inter',sans-serif;
+    }
+
+    body{
+      min-height:100vh;
+      background:#0f172a;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:20px;
+      color:white;
+    }
+
+    .container{
+      width:100%;
+      max-width:420px;
+      background:#111c34;
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:24px;
+      padding:45px;
+      box-shadow:0 20px 40px rgba(0,0,0,0.35);
+    }
+
+    .logo{
+      width:70px;
+      height:70px;
+      border-radius:18px;
+      background:#2563eb;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:28px;
+      font-weight:700;
+      margin:0 auto 24px;
+    }
+
+    h1{
+      text-align:center;
+      font-size:34px;
+      margin-bottom:10px;
+    }
+
+    .subtitle{
+      text-align:center;
+      color:#94a3b8;
+      margin-bottom:35px;
+      line-height:1.6;
+    }
+
+    label{
+      display:block;
+      margin-bottom:10px;
+      font-size:14px;
+      color:#cbd5e1;
+    }
+
+    input{
+      width:100%;
+      padding:16px;
+      border:none;
+      border-radius:14px;
+      background:#1e293b;
+      color:white;
+      margin-bottom:22px;
+      font-size:15px;
+      outline:none;
+      border:1px solid transparent;
+    }
+
+    input:focus{
+      border-color:#3b82f6;
+    }
+
+    button{
+      width:100%;
+      padding:16px;
+      border:none;
+      border-radius:14px;
+      background:#3b82f6;
+      color:white;
+      font-size:16px;
+      font-weight:600;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    button:hover{
+      background:#2563eb;
+    }
+
+    .bottom-text{
+      text-align:center;
+      margin-top:24px;
+      color:#94a3b8;
+    }
+
+    .bottom-text a{
+      color:#60a5fa;
+      text-decoration:none;
+      font-weight:600;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="logo">CS</div>
+
+  <h1>Welcome Back</h1>
+
+  <p class="subtitle">
+    Login to continue using the customer segmentation dashboard.
+  </p>
+
+  <form method="POST">
+
+    <label>Username</label>
+
+    <input type="text"
+           name="username"
+           placeholder="Enter username"
+           required>
+
+    <label>Password</label>
+
+    <input type="password"
+           name="password"
+           placeholder="Enter password"
+           required>
+
+    <button type="submit">
+      Login
+    </button>
+
+  </form>
+
+  <p class="bottom-text">
+    Don't have an account?
+    <a href="/signup">Create Account</a>
+  </p>
+
+</div>
+
+</body>
+</html>
