@@ -1,386 +1,433 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Segmentation Dashboard</title>
 
-  <title>Customer Segmentation Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
 
-  <style>
+body{
+    background:#eef2f7;
+    overflow:hidden;
+}
 
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:'Inter',sans-serif;
-    }
+/* NAVBAR */
+
+.navbar{
+    height:70px;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 30px;
+    border-bottom:1px solid #dbe3ec;
+}
+
+.logo{
+    font-size:18px;
+    font-weight:700;
+    color:#111827;
+}
+
+.logo span{
+    color:#2563eb;
+}
+
+.logout-btn{
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    padding:10px 22px;
+    border-radius:12px;
+    font-size:14px;
+    font-weight:600;
+}
+
+.main{
+    display:flex;
+    height:calc(100vh - 70px);
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:300px;
+    background:white;
+    border-right:1px solid #dbe3ec;
+    padding:12px;
+    overflow-y:hidden;
+}
+
+.card{
+    background:white;
+    border:1px solid #dbe3ec;
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:16px;
+}
+
+.card h3{
+    color:#2563eb;
+    font-size:14px;
+    margin-bottom:8px;
+}
+
+/* INPUTS */
+
+input[type="file"]{
+    width:100%;
+    margin-bottom:10px;
+    font-size:11px;
+}
+.sidebar form{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+select{
+    width:100%;
+    height:40px;
+    border:1px solid #cbd5e1;
+    border-radius:12px;
+    padding:0 12px;
+    font-size:13px;
+    background:white;
+    color:#111827;
+    outline:none;
+}
+
+select option{
+    color:#111827;
+    background:white;
+}
+
+/* BUTTON */
+
+.run-btn{
+    width:100%;
+    height:42px;
+    border:none;
+    border-radius:12px;
+    background:#2563eb;
+    color:white;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.run-btn:hover{
+    background:#1d4ed8;
+}
+
+/* CONTENT */
+
+.content{
+    flex:1;
+    padding:26px;
+    overflow-y:auto;
+}
+
+.title{
+    font-size:30px;
+    font-weight:700;
+    color:#111827;
+    margin-bottom:6px;
+}
+
+.subtitle{
+    color:#64748b;
+    font-size:15px;
+    margin-bottom:20px;
+}
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+    margin-bottom:20px;
+}
+
+.stat-card{
+    background:white;
+    border-radius:18px;
+    border:1px solid #dbe3ec;
+    padding:18px;
+}
+
+.stat-card h4{
+    color:#64748b;
+    font-size:13px;
+    margin-bottom:8px;
+}
+
+.stat-card p{
+    font-size:24px;
+    font-weight:700;
+    color:#111827;
+}
+
+/* PLOTS */
+
+.plots{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.plot-card{
+    background:white;
+    border-radius:18px;
+    border:1px solid #dbe3ec;
+    padding:16px;
+}
+
+.plot-card h3{
+    color:#2563eb;
+    font-size:18px;
+    margin-bottom:12px;
+}
+
+.plot-card img{
+    width:100%;
+    height:280px;
+    object-fit:contain;
+    background:#f8fafc;
+    border-radius:12px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1100px){
 
     body{
-      background:#0f172a;
-      color:white;
-      min-height:100vh;
+        overflow:auto;
     }
 
-    .navbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:24px 60px;
-      border-bottom:1px solid rgba(255,255,255,0.08);
-      background:#111827;
+    .main{
+        flex-direction:column;
+        height:auto;
     }
 
-    .logo{
-      font-size:24px;
-      font-weight:700;
+    .sidebar{
+        width:100%;
+        border-right:none;
+        border-bottom:1px solid #dbe3ec;
     }
 
-    .logo span{
-      color:#60a5fa;
-    }
-
-    .logout-btn{
-      text-decoration:none;
-      background:#2563eb;
-      color:white;
-      padding:12px 20px;
-      border-radius:12px;
-      font-size:14px;
-      font-weight:600;
-    }
-
-    .container{
-      max-width:1250px;
-      margin:auto;
-      padding:50px 30px;
-    }
-
-    .hero{
-      margin-bottom:50px;
-    }
-
-    .hero h1{
-      font-size:52px;
-      margin-bottom:16px;
-      line-height:1.2;
-    }
-
-    .hero p{
-      color:#94a3b8;
-      font-size:18px;
-      max-width:700px;
-      line-height:1.7;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-      gap:24px;
-      margin-bottom:40px;
-    }
-
-    .card{
-      background:#111827;
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:22px;
-      padding:30px;
-    }
-
-    .card h3{
-      margin-bottom:18px;
-      font-size:20px;
-      color:#60a5fa;
-    }
-
-    input, select{
-      width:100%;
-      padding:16px;
-      border:none;
-      border-radius:14px;
-      background:#1e293b;
-      color:white;
-      font-size:15px;
-      outline:none;
-    }
-
-    button{
-      background:#2563eb;
-      color:white;
-      border:none;
-      padding:16px 34px;
-      border-radius:14px;
-      font-size:16px;
-      font-weight:600;
-      cursor:pointer;
-      transition:0.3s;
-      margin-top:10px;
-    }
-
-    button:hover{
-      background:#1d4ed8;
-    }
-
-    .center-btn{
-      display:flex;
-      justify-content:center;
-      margin-bottom:50px;
-    }
-
-    .result-box{
-      background:#111827;
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:22px;
-      padding:35px;
-      margin-bottom:40px;
-    }
-
-    .result-box h2{
-      margin-bottom:20px;
-      color:#60a5fa;
-    }
-
-    .result-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-      gap:20px;
-    }
-
-    .metric{
-      background:#1e293b;
-      padding:20px;
-      border-radius:16px;
-    }
-
-    .metric-title{
-      color:#94a3b8;
-      margin-bottom:10px;
-      font-size:14px;
-    }
-
-    .metric-value{
-      font-size:24px;
-      font-weight:700;
+    .stats{
+        grid-template-columns:1fr;
     }
 
     .plots{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(420px,1fr));
-      gap:28px;
+        grid-template-columns:1fr;
     }
+}
 
-    .plot-card{
-      background:#111827;
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:22px;
-      padding:24px;
-    }
-
-    .plot-card h3{
-      margin-bottom:20px;
-      color:#60a5fa;
-    }
-
-    .plot-card img{
-      width:100%;
-      height:420px;
-      object-fit:contain;
-      background:white;
-      border-radius:16px;
-      padding:10px;
-    }
-
-    footer{
-      text-align:center;
-      margin-top:70px;
-      color:#64748b;
-      font-size:14px;
-    }
-
-  </style>
-
+</style>
 </head>
 
 <body>
 
-<nav class="navbar">
+<!-- NAVBAR -->
 
-  <div class="logo">
-    Customer <span>Segmentation</span>
-  </div>
+<div class="navbar">
 
-  <a href="/logout" class="logout-btn">
-    Logout
-  </a>
+    <div class="logo">
+        Customer <span>Segmentation</span>
+    </div>
 
-</nav>
+    <a href="/logout" class="logout-btn">
+        Logout
+    </a>
 
-<div class="container">
+</div>
 
-  <div class="hero">
+<div class="main">
 
-    <h1>
-      Customer Analytics Dashboard
-    </h1>
+    <!-- SIDEBAR -->
 
-    <p>
-      Upload datasets, select features dynamically and generate customer segmentation insights using machine learning algorithms.
-    </p>
+    <div class="sidebar">
 
-  </div>
+        <!-- UPLOAD FORM -->
 
-  <form action="/upload" method="POST" enctype="multipart/form-data">
+        <form action="/upload" method="POST" enctype="multipart/form-data">
 
-    <div class="grid">
+            <div class="card">
 
-      <div class="card">
+                <h3>Upload Dataset</h3>
 
-        <h3>Upload Dataset</h3>
+                <input type="file" name="file" required>
 
-        <input type="file" name="file" required>
+                <button type="submit" class="run-btn">
+                    Upload Dataset
+                </button>
 
-      </div>
+            </div>
+
+        </form>
+
+        <!-- RUN FORM -->
+
+        <form action="/run" method="POST">
+
+            <!-- ALGORITHM -->
+
+            <div class="card">
+
+                <h3>Algorithm</h3>
+
+                <select name="algorithm">
+
+                    <option value="kmeans">K-Means</option>
+
+                    <option value="dbscan">DBSCAN</option>
+
+                </select>
+
+            </div>
+
+            <!-- COLUMN 1 -->
+
+            <div class="card">
+
+                <h3>Column 1</h3>
+
+                <select name="col1" required>
+
+                    {% if columns and columns|length > 0 %}
+
+                        {% for col in columns %}
+
+                            <option value="{{ col }}">{{ col }}</option>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <option value="">Upload Dataset First</option>
+
+                    {% endif %}
+
+                </select>
+
+            </div>
+
+            <!-- COLUMN 2 -->
+
+            <div class="card">
+
+                <h3>Column 2</h3>
+
+                <select name="col2" required>
+
+                    {% if columns and columns|length > 0 %}
+
+                        {% for col in columns %}
+
+                            <option value="{{ col }}">{{ col }}</option>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <option value="">Upload Dataset First</option>
+
+                    {% endif %}
+
+                </select>
+
+            </div>
+
+            <button type="submit" class="run-btn">
+                Run Segmentation
+            </button>
+
+        </form>
 
     </div>
 
-    <div class="center-btn">
-      <button type="submit">
-        Upload Dataset
-      </button>
-    </div>
+    <!-- CONTENT -->
 
-  </form>
+    <div class="content">
 
-  {% if uploaded %}
+        <div class="title">
+            Customer Analytics Dashboard
+        </div>
 
-  <form action="/run" method="POST">
+        <div class="subtitle">
+            Analyze customer behavior and clustering insights using machine learning models.
+        </div>
 
-    <div class="grid">
+        {% if show_images %}
 
-      <div class="card">
+        <!-- STATS -->
 
-        <h3>Algorithm</h3>
+        <div class="stats">
 
-        <select name="algorithm">
+            <div class="stat-card">
 
-          <option value="kmeans">K-Means</option>
+                <h4>Algorithm</h4>
 
-          <option value="dbscan">DBSCAN</option>
+                <p>{{ selected_algorithm }}</p>
 
-        </select>
+            </div>
 
-      </div>
+            <div class="stat-card">
 
-      <div class="card">
+                <h4>Optimal K</h4>
 
-        <h3>Column 1</h3>
+                <p>{{ optimal_k }}</p>
 
-        <select name="col1">
+            </div>
 
-          {% for col in columns %}
+            <div class="stat-card">
 
-          <option value="{{ col }}">{{ col }}</option>
+                <h4>Silhouette Score</h4>
 
-          {% endfor %}
+                <p>{{ score }}</p>
 
-        </select>
+            </div>
 
-      </div>
+        </div>
 
-      <div class="card">
+        <!-- PLOTS -->
 
-        <h3>Column 2</h3>
+        <div class="plots">
 
-        <select name="col2">
+            <div class="plot-card">
 
-          {% for col in columns %}
+                <h3>Elbow Method</h3>
 
-          <option value="{{ col }}">{{ col }}</option>
+                <img src="{{ url_for('static', filename='elbow.png') }}">
 
-          {% endfor %}
+            </div>
 
-        </select>
+            <div class="plot-card">
 
-      </div>
+                <h3>Cluster Output</h3>
 
-    </div>
+                <img src="{{ url_for('static', filename='result.png') }}">
 
-    <div class="center-btn">
-      <button type="submit">
-        Run Segmentation
-      </button>
-    </div>
+            </div>
 
-  </form>
+        </div>
 
-  {% endif %}
-
-  {% if show_images %}
-
-  <div class="result-box">
-
-    <h2>Model Results</h2>
-
-    <div class="result-grid">
-
-      <div class="metric">
-
-        <div class="metric-title">Algorithm</div>
-
-        <div class="metric-value">{{ selected_algorithm }}</div>
-
-      </div>
-
-      <div class="metric">
-
-        <div class="metric-title">Optimal K</div>
-
-        <div class="metric-value">{{ optimal_k }}</div>
-
-      </div>
-
-      <div class="metric">
-
-        <div class="metric-title">Silhouette Score</div>
-
-        <div class="metric-value">{{ score }}</div>
-
-      </div>
+        {% endif %}
 
     </div>
-
-  </div>
-
-  <div class="plots">
-
-    <div class="plot-card">
-
-      <h3>Elbow Method</h3>
-
-      <img src="{{ url_for('static', filename='elbow.png') }}">
-
-    </div>
-
-    <div class="plot-card">
-
-      <h3>{{ selected_algorithm }} Output</h3>
-
-      <img src="{{ url_for('static', filename='result.png') }}">
-
-    </div>
-
-  </div>
-
-  {% endif %}
-
-  <footer>
-    Built by Aadya Mishra · Customer Segmentation ML Project
-  </footer>
 
 </div>
 

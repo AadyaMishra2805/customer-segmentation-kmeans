@@ -5,9 +5,19 @@ from flask import (
     redirect,
     session
 )
-from flask_sqlalchemy import SQLAlchemy
+
+try:
+    from flask_sqlalchemy import SQLAlchemy
+except ImportError as exc:
+    raise SystemExit(
+        "Flask-SQLAlchemy is not installed in this Python environment.\n"
+        "Activate the virtual environment and install it, or run:\n"
+        "    .venv\\Scripts\\python.exe -m pip install Flask-SQLAlchemy"
+    ) from exc
 
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 from sklearn.cluster import (
@@ -18,8 +28,6 @@ from sklearn.cluster import (
 from sklearn.preprocessing import StandardScaler
 
 from sklearn.metrics import silhouette_score
-
-from flask_sqlalchemy import SQLAlchemy
 
 from werkzeug.security import (
     generate_password_hash,
@@ -73,10 +81,22 @@ def home():
     if "user" not in session:
         return redirect("/login")
 
+    global df_global
+
+    columns = []
+
+    # If dataset already uploaded
+    if df_global is not None:
+
+        columns = df_global.select_dtypes(
+            include=['int64', 'float64']
+        ).columns.tolist()
+
     return render_template(
         "index.html",
         uploaded=False,
-        show_images=False
+        show_images=False,
+        columns=columns
     )
 
 
@@ -131,7 +151,7 @@ def login():
 
             return redirect("/")
 
-        return "Invalid Username or Password"
+        return render_template("login.html",error="Invalid Username or Password")
 
     return render_template("login.html")
 
@@ -163,11 +183,12 @@ def upload():
     ).columns.tolist()
 
     return render_template(
-        "index.html",
-        uploaded=True,
-        columns=numeric_columns,
-        show_images=False
-    )
+    "index.html",
+    uploaded=True,
+    columns=numeric_columns,
+    show_images=False,
+    selected_algorithm="K-Means"
+)
 
 
 # Run Model
@@ -178,7 +199,8 @@ def run_model():
 
     if "user" not in session:
         return redirect("/login")
-
+    if df_global is None:
+        return redirect("/")
     algorithm = request.form["algorithm"]
 
     col1 = request.form["col1"]
@@ -195,6 +217,8 @@ def run_model():
 
     # Elbow Method
     inertia = []
+
+    optimal_k = None
 
     k_values = range(2, 9)
 
@@ -253,10 +277,13 @@ def run_model():
             scaled_data
         )
 
-        score = silhouette_score(
-            scaled_data,
-            clusters
-        )
+        score = round(
+    silhouette_score(
+        scaled_data,
+        clusters
+    ),
+    3
+)
 
         plt.figure(figsize=(7,5))
 
@@ -293,6 +320,7 @@ def run_model():
         )
 
         score = "Not Applicable"
+        optimal_k = "N/A"
 
         plt.figure(figsize=(7,5))
 
